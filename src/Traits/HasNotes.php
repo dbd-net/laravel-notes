@@ -1,24 +1,23 @@
 <?php
 
-namespace AlphaOlomi\Notes\Concerns;
+declare(strict_types=1);
 
-use AlphaOlomi\Notes\Contracts\IsNote;
+namespace AlphaOlomi\Notes\Traits;
+
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\MorphMany;
-use Illuminate\Support\Facades\Auth;
 
 /**
  * @mixin \Illuminate\Database\Eloquent\Model
  */
 trait HasNotes
 {
-    /** @return MorphMany<IsNote> */
     public function notes(): MorphMany
     {
         return $this->morphMany(config('notes.model'), 'noteable');
     }
 
-    public function addNote(string $note): IsNote
+    public function addNote(string $note): Model
     {
         return $this->notes()->create([
             'note' => $note,

@@ -1,9 +1,11 @@
 <?php
 
+declare(strict_types=1);
+
 namespace AlphaOlomi\Notes\Tests;
 
-use AlphaOlomi\Notes\Concerns\HasNotes;
 use AlphaOlomi\Notes\NotesServiceProvider;
+use AlphaOlomi\Notes\Traits\HasNotes;
 use Illuminate\Database\Eloquent\Factories\Factory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Schema\Blueprint;
@@ -15,9 +17,6 @@ class TestCase extends Orchestra
 {
     use RefreshDatabase;
 
-    /**
-     * @var Model|__anonymous@912
-     */
     protected $projectClass;
 
     protected function setUp(): void
@@ -37,7 +36,13 @@ class TestCase extends Orchestra
         $this->projectClass = new class extends Model
         {
             use HasNotes;
+            protected $table = 'projects';
         };
+    }
+
+    protected function getEnvironmentSetUp($app)
+    {
+        config()->set('database.default', 'testing');
     }
 
     protected function getPackageProviders($app)
@@ -47,16 +52,5 @@ class TestCase extends Orchestra
         ];
     }
 
-    protected function getEnvironmentSetUp($app)
-    {
-        config()->set('database.default', 'testing');
 
-        $migration = require __DIR__ . '/../database/migrations/create_notes_table.php';
-        $migration->up();
-    }
-
-    protected function defineDatabaseMigrations()
-    {
-        $this->loadLaravelMigrations();
-    }
 }

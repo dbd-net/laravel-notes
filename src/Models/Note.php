@@ -1,17 +1,20 @@
 <?php
 
+declare(strict_types=1);
+
 namespace AlphaOlomi\Notes\Models;
 
-use AlphaOlomi\Notes\Contracts\IsNote;
+use Dyrynda\Database\Support\GeneratesUuid;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\MorphTo;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
-class Note extends Model implements IsNote
+class Note extends Model
 {
     use HasFactory;
     use SoftDeletes;
+    use GeneratesUuid;
 
     protected $guarded = [];
 
