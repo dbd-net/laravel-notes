@@ -15,15 +15,13 @@ trait HasNotes
     /** @return MorphMany<IsNote> */
     public function notes(): MorphMany
     {
-        return $this->morphMany(config('notes.model'), 'notable');
+        return $this->morphMany(config('notes.model'), 'noteable');
     }
 
-    public function addNote(string $content, Model $user = null, IsNote $parent = null): IsNote
+    public function addNote(string $note): IsNote
     {
         return $this->notes()->create([
-            'content' => $content,
-            'user_id' => $user ? $user->getKey() : Auth::id(),
-            'parent_id' => $parent?->getKey(),
+            'note' => $note,
         ]);
     }
 }

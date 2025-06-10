@@ -12,7 +12,7 @@ class NoteFactory extends Factory
     public function definition()
     {
         return [
-            'content' => $this->faker->words(rand(3, 10), asText: true),
+            'note' => $this->faker->words(rand(3, 10), asText: true),
         ];
     }
 }

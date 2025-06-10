@@ -1,21 +1,28 @@
 <?php
 
 use Illuminate\Database\Migrations\Migration;
+use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
 return new class extends Migration
 {
+    use SoftDeletes;
+
     public function up()
     {
         Schema::create('notes', function (Blueprint $table) {
             $table->id();
-            $table->unsignedBigInteger('parent_id')->nullable()->index();
-            $table->unsignedBigInteger('user_id')->index()->nullable();
-            $table->morphs('notable');
-            $table->longText('content');
             $table->timestamps();
             $table->softDeletes();
+            $table->uuid()->unique();
+            $table->longText('note');
+            $table->morphs('noteable');
         });
+    }
+
+    public function down(): void
+    {
+        Schema::dropIfExists('notes');
     }
 };
