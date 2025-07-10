@@ -5,6 +5,9 @@ namespace AlphaOlomi\Notes\Database\Factories;
 use Illuminate\Database\Eloquent\Factories\Factory;
 use AlphaOlomi\Notes\Models\Note;
 
+/**
+ * @extends \Illuminate\Database\Eloquent\Factories\Factory<\AlphaOlomi\Notes\Models\Note>
+ */
 class NoteFactory extends Factory
 {
     protected $model = Note::class;
@@ -12,7 +15,7 @@ class NoteFactory extends Factory
     public function definition()
     {
         return [
-            'content' => $this->faker->words(rand(3, 10), asText: true),
+            'content' => fake()->words(rand(3, 10), asText: true),
         ];
     }
 }
